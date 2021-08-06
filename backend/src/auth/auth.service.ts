@@ -17,7 +17,8 @@ export class AuthService {
   // in a real application, we use bcrypt
   async validateUser(name: string, password: string): Promise<any> {
     const user = await this.usersService.findOneByName(name);
-    if (user && user.password === password) {
+    const isMatch = await bcrypt.compare(password, user.password.toString());
+    if (isMatch) {
       const { password, ...result } = user;
       return result;
     }
@@ -39,7 +40,7 @@ export class AuthService {
 
     const payload = { username: user.name };
     return {
-      access_token: this.jwtService.sign(payload),
+      token: this.jwtService.sign(payload),
     };
   }
 }

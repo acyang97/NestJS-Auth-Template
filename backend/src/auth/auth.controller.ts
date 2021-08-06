@@ -21,8 +21,6 @@ export class AuthController {
 
   @Post("register")
   public async register(@Body() createUserDto: CreateUserDto) {
-    // if (await this.usersService.findOneByName(createUserDto.username)) {
-    // }
     try {
       const user = await this.usersService.createOne(createUserDto);
       return this.authService.login({

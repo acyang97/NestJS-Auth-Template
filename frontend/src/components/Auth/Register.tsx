@@ -66,9 +66,9 @@ const Register = () => {
                 variant="outlined"
                 required
                 fullWidth
-                id="name"
-                label="Full Name"
-                name="name"
+                id="email"
+                label="Email Address"
+                name="email"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   console.log("changed")
                 }
@@ -79,23 +79,9 @@ const Register = () => {
                 variant="outlined"
                 required
                 fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  console.log("changed")
-                }
-              />
-            </Grid>
-            <Grid item xs={3}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="age"
-                label="Age"
-                type="number"
-                id="age"
+                id="username"
+                label="Username"
+                name="username"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   console.log("changed")
                 }
