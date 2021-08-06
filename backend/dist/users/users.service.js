@@ -21,21 +21,21 @@ let UsersService = class UsersService {
     constructor(userModel) {
         this.userModel = userModel;
     }
-    async findOneByName(name) {
+    async findOneByEmail(email) {
         return this.userModel
             .findOne({
-            name,
+            email,
         })
             .lean()
             .exec();
     }
     async createOne(createUserDto) {
-        if (await this.findOneByName(createUserDto.username)) {
+        if (await this.findOneByEmail(createUserDto.email)) {
             throw new Error("user already exist");
         }
         const newUser = new this.userModel({
             email: createUserDto.email,
-            name: createUserDto.username,
+            username: createUserDto.username,
             password: createUserDto.password,
         });
         newUser.password = await bcrypt.hash(createUserDto.password.toString(), 10);

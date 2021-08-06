@@ -11,5 +11,5 @@ export declare class AuthController {
     login(loginUserDto: LoginUserDto): Promise<{
         token: string;
     }>;
-    getProfile(): Promise<string>;
+    getProfile(req: any): Promise<any>;
 }

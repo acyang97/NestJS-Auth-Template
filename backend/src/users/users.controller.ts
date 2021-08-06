@@ -18,10 +18,6 @@ import { UsersService } from "./users.service";
 export class UsersController {
   constructor(private readonly userService: UsersService) {} // private readonly authService: AuthService // private readonly usersService: UsersService,
 
-  @Get(":name")
-  public async getOneByName(@Param("name") name: string): Promise<User> {
-    return this.userService.findOneByName(name);
-  }
   // @UseGuards(LocalAuthGuard)
   // @Post("register")
   // public async register(@Body() createUserDto: CreateUserDto) {

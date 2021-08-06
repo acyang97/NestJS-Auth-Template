@@ -4,6 +4,6 @@ export declare class CreateUserDto {
     password: string;
 }
 export declare class LoginUserDto {
-    username: string;
+    email: string;
     password: string;
 }

@@ -2,7 +2,8 @@ import { Document, Types } from "mongoose";
 
 // do bcrypt later
 export interface User {
-  name: string;
+  email: string;
+  username: string;
   password: string;
 }
 

@@ -13,6 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { bindActionCreators } from "redux";
 import { Redirect } from "react-router-dom";
 import { RootState } from "../../reducers/index";
+import { authActionCreators } from "../../action-creators/index";
 
 function Copyright() {
   return (
@@ -49,6 +50,37 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const Register = () => {
   const classes = useStyles();
+  const state = useSelector((state: RootState) => state.auth);
+  const { isAuthenticated } = state;
+  const dispatch = useDispatch();
+  const { register } = bindActionCreators(authActionCreators, dispatch);
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  const { username, email, password, confirmPassword } = formData;
+
+  const onSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      console.log("lalala");
+      return;
+    }
+    register(username, email, password);
+  };
+
+  if (isAuthenticated) {
+    return <Redirect to="/landing" />;
+  }
+
   return (
     <Container component="main" maxWidth="xs">
       <div className={classes.paper}>
@@ -59,8 +91,21 @@ const Register = () => {
           Sign up
         </Typography>
 
-        <form className={classes.form} onSubmit={(e) => console.log("submit")}>
+        <form className={classes.form} onSubmit={(e) => onSubmit(e)}>
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                id="username"
+                label="Full Name"
+                name="username"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange(e)
+                }
+              />
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -70,20 +115,7 @@ const Register = () => {
                 label="Email Address"
                 name="email"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  console.log("changed")
-                }
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="username"
-                label="Username"
-                name="username"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  console.log("changed")
+                  onChange(e)
                 }
               />
             </Grid>
@@ -97,7 +129,7 @@ const Register = () => {
                 type="password"
                 id="password"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  console.log("changed")
+                  onChange(e)
                 }
               />
             </Grid>
@@ -111,7 +143,7 @@ const Register = () => {
                 type="password"
                 id="confirmPassword"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  console.log("changed")
+                  onChange(e)
                 }
               />
             </Grid>

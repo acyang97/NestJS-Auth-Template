@@ -7,17 +7,21 @@ import { AuthService } from "../auth.service";
 // Create a file called
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
-  // the constructor that can have the options or smt.
+  //https://stackoverflow.com/questions/18138992/use-email-with-passport-local-previous-help-not-working
   constructor(private readonly authService: AuthService) {
-    super();
+    super({
+      usernameField: "email",
+      passwordField: "password",
+    });
   }
 
   // For each strategy, Passport will call the verify function
   // (implemented with the validate() method in @nestjs/passport)
   // using an appropriate strategy-specific set of parameters.
   // the validate method to override
-  async validate(username: string, password: string): Promise<any> {
-    const user = await this.authService.validateUser(username, password);
+  async validate(email: string, password: string): Promise<any> {
+    // const email = username;
+    const user = await this.authService.validateUser(email, password);
     if (!user) {
       throw new UnauthorizedException();
     }

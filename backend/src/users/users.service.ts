@@ -15,22 +15,22 @@ export class UsersService {
   //   return this.users.find(user => user.username === username);
   // }
 
-  public async findOneByName(name: string): Promise<User> {
+  public async findOneByEmail(email: string): Promise<User> {
     return this.userModel
       .findOne({
-        name,
+        email,
       })
       .lean()
       .exec();
   }
 
   public async createOne(createUserDto: CreateUserDto): Promise<User> {
-    if (await this.findOneByName(createUserDto.username)) {
+    if (await this.findOneByEmail(createUserDto.email)) {
       throw new Error("user already exist");
     }
     const newUser = new this.userModel({
       email: createUserDto.email,
-      name: createUserDto.username,
+      username: createUserDto.username,
       password: createUserDto.password,
     });
     newUser.password = await bcrypt.hash(createUserDto.password.toString(), 10);

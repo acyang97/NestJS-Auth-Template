@@ -4,6 +4,6 @@ import { User, UserDoc } from "./user.interface";
 export declare class UsersService {
     private readonly userModel;
     constructor(userModel: Model<UserDoc>);
-    findOneByName(name: string): Promise<User>;
+    findOneByEmail(email: string): Promise<User>;
     createOne(createUserDto: CreateUserDto): Promise<User>;
 }

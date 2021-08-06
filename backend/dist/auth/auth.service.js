@@ -32,8 +32,8 @@ let AuthService = class AuthService {
         this.usersService = usersService;
         this.jwtService = jwtService;
     }
-    async validateUser(name, password) {
-        const user = await this.usersService.findOneByName(name);
+    async validateUser(email, password) {
+        const user = await this.usersService.findOneByEmail(email);
         const isMatch = await bcrypt.compare(password, user.password.toString());
         if (isMatch) {
             const { password } = user, result = __rest(user, ["password"]);
@@ -42,15 +42,15 @@ let AuthService = class AuthService {
         return null;
     }
     async login(loginUserDto) {
-        const user = await this.usersService.findOneByName(loginUserDto.username);
+        const user = await this.usersService.findOneByEmail(loginUserDto.email);
         if (!user) {
-            throw new Error("User does not exist");
+            throw new common_1.NotFoundException("User does not exist");
         }
         const isMatch = await bcrypt.compare(loginUserDto.password, user.password.toString());
         if (!isMatch) {
-            throw new Error("Invalid Password");
+            throw new common_1.BadRequestException("Invalid Password");
         }
-        const payload = { username: user.name };
+        const payload = { email: user.email, username: user.username };
         return {
             token: this.jwtService.sign(payload),
         };

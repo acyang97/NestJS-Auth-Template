@@ -1,4 +1,8 @@
-import { Injectable } from "@nestjs/common";
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { UsersService } from "../users/users.service";
 import { JwtService } from "@nestjs/jwt";
 import { User } from "src/users/user.interface";
@@ -15,8 +19,8 @@ export class AuthService {
   ) {}
 
   // in a real application, we use bcrypt
-  async validateUser(name: string, password: string): Promise<any> {
-    const user = await this.usersService.findOneByName(name);
+  async validateUser(email: string, password: string): Promise<any> {
+    const user = await this.usersService.findOneByEmail(email);
     const isMatch = await bcrypt.compare(password, user.password.toString());
     if (isMatch) {
       const { password, ...result } = user;
@@ -26,19 +30,19 @@ export class AuthService {
   }
 
   async login(loginUserDto: LoginUserDto) {
-    const user = await this.usersService.findOneByName(loginUserDto.username);
+    const user = await this.usersService.findOneByEmail(loginUserDto.email);
     if (!user) {
-      throw new Error("User does not exist");
+      throw new NotFoundException("User does not exist");
     }
     const isMatch = await bcrypt.compare(
       loginUserDto.password,
       user.password.toString()
     );
     if (!isMatch) {
-      throw new Error("Invalid Password");
+      throw new BadRequestException("Invalid Password");
     }
 
-    const payload = { username: user.name };
+    const payload = { email: user.email, username: user.username };
     return {
       token: this.jwtService.sign(payload),
     };

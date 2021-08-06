@@ -17,13 +17,13 @@ const constants_1 = require("../constants");
 let JwtStrategy = class JwtStrategy extends passport_1.PassportStrategy(passport_jwt_1.Strategy) {
     constructor() {
         super({
-            jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
+            jwtFromRequest: passport_jwt_1.ExtractJwt.fromHeader("x-auth-token"),
             ignoreExpiration: false,
             secretOrKey: constants_1.jwtConstants.secret,
         });
     }
     async validate(payload) {
-        return { username: payload.username };
+        return { email: payload.email, username: payload.username };
     }
 };
 JwtStrategy = __decorate([

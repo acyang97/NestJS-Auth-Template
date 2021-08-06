@@ -32,10 +32,10 @@ exports.CreateUserDto = CreateUserDto;
 class LoginUserDto {
 }
 __decorate([
-    class_validator_1.IsString(),
+    class_validator_1.IsEmail(),
     class_validator_1.IsNotEmpty(),
     __metadata("design:type", String)
-], LoginUserDto.prototype, "username", void 0);
+], LoginUserDto.prototype, "email", void 0);
 __decorate([
     class_validator_1.IsString(),
     class_validator_1.IsNotEmpty(),

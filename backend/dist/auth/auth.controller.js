@@ -18,7 +18,6 @@ const user_dto_1 = require("../users/user.dto");
 const users_service_1 = require("../users/users.service");
 const auth_service_1 = require("./auth.service");
 const jwt_auth_guard_1 = require("./guards/jwt-auth.guard");
-const local_auth_guard_1 = require("./guards/local-auth.guard");
 let AuthController = class AuthController {
     constructor(authService, usersService) {
         this.authService = authService;
@@ -28,7 +27,7 @@ let AuthController = class AuthController {
         try {
             const user = await this.usersService.createOne(createUserDto);
             return this.authService.login({
-                username: user.name,
+                email: user.email,
                 password: createUserDto.password,
             });
         }
@@ -37,15 +36,11 @@ let AuthController = class AuthController {
         }
     }
     async login(loginUserDto) {
-        try {
-            return this.authService.login(loginUserDto);
-        }
-        catch (e) {
-            throw new Error("user not found");
-        }
+        console.log("called login");
+        return this.authService.login(loginUserDto);
     }
-    async getProfile() {
-        return "lalalala";
+    async getProfile(req) {
+        return req.user;
     }
 };
 __decorate([
@@ -56,7 +51,6 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "register", null);
 __decorate([
-    common_1.UseGuards(local_auth_guard_1.LocalAuthGuard),
     common_1.Post("login"),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
@@ -66,8 +60,9 @@ __decorate([
 __decorate([
     common_1.UseGuards(jwt_auth_guard_1.JwtAuthGuard),
     common_1.Get("profile"),
+    __param(0, common_1.Request()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], AuthController.prototype, "getProfile", null);
 AuthController = __decorate([

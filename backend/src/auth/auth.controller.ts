@@ -24,7 +24,7 @@ export class AuthController {
     try {
       const user = await this.usersService.createOne(createUserDto);
       return this.authService.login({
-        username: user.name,
+        email: user.email,
         password: createUserDto.password,
       });
     } catch (err) {
@@ -32,21 +32,18 @@ export class AuthController {
     }
   }
 
-  @UseGuards(LocalAuthGuard)
+  // @UseGuards(LocalAuthGuard)
   @Post("login")
   public async login(@Body() loginUserDto: LoginUserDto) {
     // check for password next time
-    try {
-      return this.authService.login(loginUserDto);
-    } catch (e) {
-      throw new Error("user not found");
-    }
+    console.log("called login");
+    return this.authService.login(loginUserDto);
   }
 
   // test protected route
   @UseGuards(JwtAuthGuard)
   @Get("profile")
-  public async getProfile() {
-    return "lalalala";
+  public async getProfile(@Request() req) {
+    return req.user;
   }
 }
