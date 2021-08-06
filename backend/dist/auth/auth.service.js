@@ -52,7 +52,7 @@ let AuthService = class AuthService {
         }
         const payload = { username: user.name };
         return {
-            access_token: this.jwtService.sign(payload),
+            token: this.jwtService.sign(payload),
         };
     }
 };

@@ -6,10 +6,10 @@ export declare class AuthController {
     private readonly usersService;
     constructor(authService: AuthService, usersService: UsersService);
     register(createUserDto: CreateUserDto): Promise<{
-        access_token: string;
+        token: string;
     }>;
     login(loginUserDto: LoginUserDto): Promise<{
-        access_token: string;
+        token: string;
     }>;
     getProfile(): Promise<string>;
 }
