@@ -10,7 +10,6 @@ import {
   RegisterFailAction,
   RegisterSucessAction,
 } from "../actions/auth.actions";
-import { ErrorAlert } from "../interfaces/Alert.interface";
 import setAuthToken from "../utils/setAuthToken";
 import { setAlert } from "./alert";
 
@@ -48,10 +47,7 @@ export const login =
     const body = { email, password };
 
     try {
-      // WE WANT TO LOGIN
-      console.log("start try");
       const res = await axios.post("/auth/login", body);
-      console.log("nope");
       dispatch({
         type: authActionTypes.LOGIN_SUCCESS,
         payload: res.data,
