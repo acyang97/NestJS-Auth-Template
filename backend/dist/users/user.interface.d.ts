@@ -4,6 +4,10 @@ export interface User {
     username: string;
     password: string;
 }
+export interface AuthenticatedUser {
+    email: string;
+    username: string;
+}
 export interface UserDoc extends User, Document {
     _id: Types.ObjectId;
 }
