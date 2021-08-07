@@ -12,3 +12,14 @@ npm i
 ```
 
 In the `app.module.ts` file, update your mongo URI
+
+To start running
+
+```
+# Navigate to the backend folder
+npm run start:dev
+
+# Navigate to the client folder
+npm run start
+
+```
