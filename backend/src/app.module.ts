@@ -6,13 +6,7 @@ import { AuthModule } from "./auth/auth.module";
 import { UsersModule } from "./users/users.module";
 
 @Module({
-  imports: [
-    AuthModule,
-    UsersModule,
-    MongooseModule.forRoot(
-      "mongodb+srv://admin:admin@cluster0.qggw1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-    ),
-  ],
+  imports: [AuthModule, UsersModule, MongooseModule.forRoot("your mongo URI")],
   controllers: [AppController],
   providers: [AppService],
 })

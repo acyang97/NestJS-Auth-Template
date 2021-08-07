@@ -17,11 +17,7 @@ let AppModule = class AppModule {
 };
 AppModule = __decorate([
     common_1.Module({
-        imports: [
-            auth_module_1.AuthModule,
-            users_module_1.UsersModule,
-            mongoose_1.MongooseModule.forRoot("mongodb+srv://admin:admin@cluster0.qggw1.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"),
-        ],
+        imports: [auth_module_1.AuthModule, users_module_1.UsersModule, mongoose_1.MongooseModule.forRoot("your mongo URI")],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })

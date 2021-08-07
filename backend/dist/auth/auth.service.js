@@ -24,7 +24,6 @@ exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("../users/users.service");
 const jwt_1 = require("@nestjs/jwt");
-const user_interface_1 = require("../users/user.interface");
 const user_dto_1 = require("../users/user.dto");
 const bcrypt = require("bcrypt");
 let AuthService = class AuthService {
